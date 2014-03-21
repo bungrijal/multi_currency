@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["rijaludinmuhsin@gmail.com"]
   spec.summary       = "Library for multi currency support"
   spec.description   = "Provide various functions to support multi currency in activerecord object."
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/xsoulsyndicate/multi_currency"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
