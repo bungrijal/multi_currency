@@ -1,5 +1,6 @@
 require "multi_currency/version"
 require "multi_currency/converter"
+require "multi_currency/configuration"
 
 module MultiCurrency
   extend ActiveSupport::Concern
@@ -29,7 +30,7 @@ module MultiCurrency
         end
 
         define_method "#{column}_in" do |currency_code|
-          default_currency = self.send("#{column}_currency") rescue Money.default_currency.id # to do: should get this from multi_currency config
+          default_currency = self.send("#{column}_currency") rescue MultiCurrency.configuration.default_currency
           date = self.send("#{column}_rate_date") rescue Date.today
           rate = MultiCurrency::Converter.get_rate_and_cache(default_currency, currency_code, date)
           self.send(column) * rate
@@ -38,7 +39,7 @@ module MultiCurrency
 
       define_method "do_currency_exchange" do
         multi_currency_columns.each do |column|
-          eval("self.#{column}_currency = 'usd'") # to do: should get this from multi_currency config
+          eval("self.#{column}_currency = '#{MultiCurrency.configuration.default_currency}'")
           date = self.send("#{column}_rate_date") || Date.today
           eval("self.#{column}_rate_date = date")
           rate = MultiCurrency::Converter.get_rate_and_cache(self.send("#{column}_source_currency"), self.send("#{column}_currency"), date)
