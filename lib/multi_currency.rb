@@ -39,11 +39,11 @@ module MultiCurrency
 
       define_method "do_currency_exchange" do
         multi_currency_columns.each do |column|
-          eval("self.#{column}_currency = '#{MultiCurrency.configuration.default_currency}'")
+          eval("self.#{column}_currency = '#{MultiCurrency.configuration.default_currency.downcase}'")
           date = self.send("#{column}_rate_date") || Date.today
           eval("self.#{column}_rate_date = date")
           rate = MultiCurrency::Converter.get_rate_and_cache(self.send("#{column}_source_currency"), self.send("#{column}_currency"), date)
-          eval("self.#{column} = self.#{column}_source_amount.to_f * rate")
+          eval("self.#{column} = self.#{column}_source_amount * rate")
         end
       end
 
