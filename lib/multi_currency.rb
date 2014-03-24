@@ -30,23 +30,8 @@ module MultiCurrency
 
         define_method "#{column}_in" do |currency_code|
           default_currency = self.send("#{column}_currency") rescue Money.default_currency.id
-          if default_currency.downcase == currency_code.downcase
-            rate = 1.0
-          else
-            date = self.send("#{column}_rate_date") rescue Date.today
-            exchange_rate = ExchangeRate.find_by_from_code_and_to_code_and_date(default_currency.downcase, currency_code.downcase, date)
-            rate = if exchange_rate.present?
-              exchange_rate.rate
-            else
-              response = Net::HTTP.get_response(URI("http://currencies.apps.grandtrunk.net/getrate/#{date.strftime("%Y-%m-%d")}/#{default_currency.downcase}/#{currency_code.downcase}"))
-              if response.is_a? Net::HTTPOK
-                ExchangeRate.create(from_code: default_currency, to_code: currency_code, date: date, rate: response.body.to_f)
-                response.body.to_f
-              else
-                raise "#{response.code}: #{response.body}"
-              end
-            end
-          end
+          date = self.send("#{column}_rate_date") rescue Date.today
+          rate = MultiCurrency::Converter.get_rate_and_cache(default_currency, currency_code, date)
           self.send(column) * rate
         end
       end

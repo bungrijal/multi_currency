@@ -1,7 +1,7 @@
 module MultiCurrency
   module Converter
     
-    def get_rate_and_cache(source_currency, to_currency, date)
+    def self.get_rate_and_cache(source_currency, to_currency, date)
       if source_currency.downcase == to_currency.downcase
         rate = 1.0
       else
