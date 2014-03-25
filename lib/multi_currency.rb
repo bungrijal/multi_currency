@@ -52,4 +52,4 @@ module MultiCurrency
   end
 end
 
-ActiveRecord::Base.include(MultiCurrency)
+ActiveRecord::Base.send(:include, MultiCurrency)
