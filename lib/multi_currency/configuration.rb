@@ -1,9 +1,14 @@
 module MultiCurrency
   class Configuration
-    attr_accessor :default_currency
+    attr_accessor :default_currency, :default_converter
 
     def initialize
       @default_currency = 'usd'
+      @default_converter = 'GrandTrunk'
+    end
+
+    def default_converter
+      "MultiCurrency::Converter::#{@default_converter}".safe_constantize
     end
   end
 
