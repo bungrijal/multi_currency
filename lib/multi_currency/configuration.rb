@@ -7,6 +7,14 @@ module MultiCurrency
       @default_converter = 'GrandTrunk'
     end
 
+    def default_converter=(converter)
+      if ['GrandTrunk'].include? converter
+        @default_converter = converter
+      else
+        raise "Undefined converter"
+      end
+    end
+
     def default_converter
       "MultiCurrency::Converter::#{@default_converter}".safe_constantize
     end
