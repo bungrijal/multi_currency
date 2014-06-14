@@ -1,6 +1,6 @@
 require "multi_currency/version"
 require "multi_currency/configuration"
-Dir["converter/*.rb"].each {|file| require file }
+require "converter/grand_trunk"
 
 module MultiCurrency
   extend ActiveSupport::Concern
