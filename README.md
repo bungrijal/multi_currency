@@ -79,7 +79,7 @@ Add an initializer e.g config/initializers/multi_currency.rb
 MultiCurrency.configure do |config|
   config.default_currency = 'eur'
 end
-```ruby
+```
 
 ## Contributing
 
