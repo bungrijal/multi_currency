@@ -55,7 +55,7 @@ product = Product.first
 product.price_in('EUR')
 ```
 
-Default exchange rate is current date. If you want to get price with currency exchange rate in other date, just pass a date:
+Default exchange rate is rate from _rate_date column. If you want to get price with currency exchange rate in other date, just pass a date:
 
 ```ruby
 product.price_in('EUR', Date.yesterday)

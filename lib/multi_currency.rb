@@ -21,16 +21,17 @@ module MultiCurrency
     def multi_currency_for(columns)
       multi_currency_columns = columns
       multi_currency_columns.each do |column|
-        define_singleton_method "sum_#{column}" do |currency, date = Date.today|
-          formatted_date = date.strftime("%Y-%m-%d")
+        define_singleton_method "sum_#{column}" do |currency, date = nil|
+          formatted_date = date.nil? ? "#{column}_rate_date" : "'#{date.strftime("%Y-%m-%d")}'"
           self.sum("
             CASE #{column}_currency
               WHEN '#{currency.downcase}' THEN #{column}
-              ELSE #{column} * (SELECT exchange_rates.rate FROM exchange_rates WHERE (exchange_rates.from_code = #{column}_currency AND to_code = '#{currency.downcase}' AND date = '#{formatted_date}') )
+              ELSE #{column} * (SELECT exchange_rates.rate FROM exchange_rates WHERE (exchange_rates.from_code = #{column}_currency AND to_code = '#{currency.downcase}' AND date = #{formatted_date}) )
             END")
         end
 
-        define_method "#{column}_in" do |currency_code, date = Date.today|
+        define_method "#{column}_in" do |currency_code, date = nil|
+          date = self.send("#{column}_rate_date") if date.nil?
           default_currency = self.send("#{column}_currency") rescue MultiCurrency.configuration.default_currency
           rate = MultiCurrency.configuration.default_converter.get_rate_and_cache(default_currency, currency_code, date)
           self.send(column) * rate
