@@ -6,15 +6,11 @@ TODO: Write a gem description
 
 Add this line to your application's Gemfile:
 
-    gem 'multi_currency'
+    gem 'multi_currency', github: 'xsoulsyndicate/multi_currency'
 
 And then execute:
 
     $ bundle
-
-Or install it yourself as:
-
-    $ gem install multi_currency
 
 ## Usage
 
