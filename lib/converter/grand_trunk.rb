@@ -10,7 +10,7 @@ module MultiCurrency
           rate = if exchange_rate.present?
             exchange_rate.rate
           else
-            response = Net::HTTP.get_response(URI("http://currencies.apps.grandtrunk.net/getrate/#{date.strftime("%Y-%m-%d")}/#{source_currency.downcase}/#{to_currency.downcase}"))
+            response = Net::HTTP.get_response(URI("http://currencies.apps.grandtrunk.net/getrate/#{(date - 1).strftime("%Y-%m-%d")}/#{source_currency.downcase}/#{to_currency.downcase}"))
             if response.is_a? Net::HTTPOK
               ExchangeRate.create!(from_code: source_currency, to_code: to_currency, date: date, rate: response.body.to_f)
               response.body.to_f
