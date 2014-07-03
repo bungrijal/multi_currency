@@ -64,7 +64,7 @@ product.price_in('EUR', Date.yesterday)
 You can also get total of price in other currency:
 
 ```ruby
-Product.all.sum_price('EUR', Date.today)
+Product.sum_price('EUR', Date.today)
 ```
 
 ## Configuration
