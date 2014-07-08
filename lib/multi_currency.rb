@@ -29,7 +29,7 @@ module MultiCurrency
               CASE #{column}_currency
                 WHEN '#{currency.downcase}' THEN #{column}
                 ELSE #{column} * (SELECT exchange_rates.rate FROM exchange_rates WHERE (exchange_rates.from_code = #{column}_currency AND to_code = '#{currency.downcase}' AND date = #{formatted_date}) )
-              END")
+              END").to_f
         end
 
         define_method "#{column}_in" do |currency_code, date = nil|
