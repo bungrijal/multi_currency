@@ -1,6 +1,7 @@
 require "multi_currency/version"
 require "multi_currency/configuration"
 require "converter/grand_trunk"
+require "multi_currency/converter"
 
 module MultiCurrency
   extend ActiveSupport::Concern
