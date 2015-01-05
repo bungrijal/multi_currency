@@ -10,6 +10,8 @@ module MultiCurrency
     def default_converter=(converter)
       if ['GrandTrunk'].include? converter
         @default_converter = converter
+      elsif ['Openexchange'].include? converter
+        @default_converter = converter
       else
         raise "Undefined converter"
       end

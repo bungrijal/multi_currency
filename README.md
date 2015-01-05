@@ -77,6 +77,23 @@ MultiCurrency.configure do |config|
 end
 ```
 
+## Open Exchange Rates Converter
+
+Set default_converter = 'Openexchange' on config/initializers/multi_currency.rb
+
+```ruby
+MultiCurrency.configure do |config|
+  config.default_converter = 'Openexchange'
+end
+```
+
+You will need APP ID to use OpenExchangeRate, you can get from https://openexchangerates.org for free.
+Set OPEN_EXCHANGE_RATES_APP_ID environment variable. 
+
+```ruby
+OPEN_EXCHANGE_RATES_APP_ID = 'APP_ID'
+```
+
 ## Contributing
 
 1. Fork it ( http://github.com/xsoulsyndicate/multi_currency/fork )
